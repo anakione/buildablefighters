@@ -1,0 +1,10 @@
+name="BuildableFighters"
+path="mod/buildablefighters"
+tags={
+	"Military"
+	"Gameplay"
+	"Spaceships"
+}
+picture="buildablefighters.jpg"
+remote_file_id="885722613"
+supported_version="1.4.1"

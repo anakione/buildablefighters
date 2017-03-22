@@ -1,0 +1,221 @@
+namespace = heavy_carrier
+
+# Fleet enters combat
+event = {
+	id = heavy_carrier.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		FROMFROM = {
+			save_event_target_as = fleet_cur
+			if = {
+				limit = {
+					OWNER = {
+						count_owned_ships = {
+							limit = {
+								is_ship_size = battleship
+								FLEET = { is_same_value = event_target:fleet_cur }
+							}
+							count > 0
+						}
+					}
+				}
+				fleet_event = { id = heavy_carrier.2 days = 5 }
+				#OWNER = {
+				#	every_owned_ship = {
+				#		limit = {
+				#			is_ship_size = battleship
+				#			FLEET = { is_same_value = event_target:fleet_cur }
+				#		}
+
+						# spawn drones
+				#		ship_event = { id = heavy_carrier.2 }
+				#	}
+				#}
+			}
+		}
+
+		FROMFROMFROM = {
+			save_event_target_as = fleet_cur
+			if = {
+				limit = {
+					OWNER = {
+						count_owned_ships = {
+							limit = {
+								is_ship_size = battleship
+								FLEET = { is_same_value = event_target:fleet_cur }
+							}
+							count > 0
+						}
+					}
+				}
+				fleet_event = { id = heavy_carrier.2 days = 5 }
+			}
+		}
+	}
+}
+
+# Spawn drones
+fleet_event = {
+	id = heavy_carrier.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				check_variable = {
+					which = "heavy_carrier_tcount"
+					value < 1
+				}
+			}
+
+			set_variable = {
+				which = "heavy_carrier_tcount"
+				value < 1
+			}
+		}
+
+		change_variable = {
+			which = "heavy_carrier_tcount"
+			value = 1
+		}
+
+		if = {
+			limit = {
+				is_in_combat = yes
+				check_variable = {
+					which = "heavy_carrier_tcount"
+					value = 2
+				}
+			}
+
+			OWNER = {
+				every_owned_ship = {
+					limit = {
+						is_ship_size = battleship
+						FLEET = { is_same_value = PREVPREVPREV }
+					}
+					create_fleet = {
+						name = "Fighter Squadron"
+						settings = { spawn_debris = no }
+						effect = {
+							set_owner = PREVPREV
+
+							create_ship = {
+								name = "Fighter"
+								random_existing_design = "fighter"
+								graphical_culture = root.owner
+							}
+							last_created_ship = { ship_event = { id = heavy_carrier.5 days = 45} }
+							create_ship = {
+								name = "Fighter"
+								random_existing_design = "fighter"
+								graphical_culture = root.owner
+							}
+							last_created_ship = { ship_event = { id = heavy_carrier.5 days = 45} }
+														create_ship = {
+								name = "Fighter"
+								random_existing_design = "fighter"
+								graphical_culture = root.owner
+							}
+							last_created_ship = { ship_event = { id = heavy_carrier.5 days = 45} }							
+							create_ship = {
+								name = "Fighter"
+								random_existing_design = "fighter"
+								graphical_culture = root.owner
+							}
+							last_created_ship = { ship_event = { id = heavy_carrier.5 days = 45} }
+							create_ship = {
+								name = "Fighter"
+								random_existing_design = "fighter"
+								graphical_culture = root.owner
+							}
+							last_created_ship = { ship_event = { id = heavy_carrier.5 days = 45} }							
+							create_ship = {
+								name = "Bomber"
+								random_existing_design = "bomber"
+								graphical_culture = root.owner
+							}
+							last_created_ship = { ship_event = { id = heavy_carrier.5 days = 45} }
+							create_ship = {
+								name = "Bomber"
+								random_existing_design = "bomber"
+								graphical_culture = root.owner
+							}
+							last_created_ship = { ship_event = { id = heavy_carrier.5 days = 45} }
+							create_ship = {
+								name = "Bomber"
+								random_existing_design = "bomber"
+								graphical_culture = root.owner
+							}
+							last_created_ship = { ship_event = { id = heavy_carrier.5 days = 45} }
+							create_ship = {
+								name = "Bomber"
+								random_existing_design = "bomber"
+								graphical_culture = root.owner
+							}
+							last_created_ship = { ship_event = { id = heavy_carrier.5 days = 45} }																					
+							set_location = {
+								target = PREV
+								distance = 1
+								angle = random
+							}
+							
+							set_fleet_stance = aggressive
+							set_aggro_range_measure_from = self
+							set_aggro_range = 500
+						}
+					}
+				}
+			}
+
+			fleet_event = { id = heavy_carrier.3 days = 50 }
+
+			else = {
+				change_variable = {
+					which = "heavy_carrier_tcount"
+					value = -1
+				}
+			}
+		}
+	}
+}
+
+fleet_event = {
+	id = heavy_carrier.3
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		change_variable = {
+			which = "heavy_carrier_tcount"
+			value = -1
+		}
+
+		fleet_event = { id = heavy_carrier.2 }
+	}
+}
+
+fleet_event = {
+	id = heavy_carrier.4
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		destroy_fleet = THIS
+	}
+}
+
+# End of drone ship lifespan 
+ship_event = {
+	id = heavy_carrier.5
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {		
+		#destroy_fleet = THIS		
+		reduce_hp_percent = 100
+	}
+}
