@@ -1,6 +1,5 @@
 namespace = heavy_carrier
 
-# Fleet enters combat
 event = {
 	id = heavy_carrier.1
 	hide_window = yes
@@ -8,43 +7,31 @@ event = {
 
 	immediate = {
 		FROMFROM = {
-			save_event_target_as = fleet_cur
+			save_event_target_as = this_fleet
 			if = {
 				limit = {
 					OWNER = {
 						count_owned_ships = {
 							limit = {
 								is_ship_size = battleship
-								FLEET = { is_same_value = event_target:fleet_cur }
+								FLEET = { is_same_value = event_target:this_fleet }
 							}
 							count > 0
 						}
 					}
 				}
-				fleet_event = { id = heavy_carrier.2 days = 5 }
-				#OWNER = {
-				#	every_owned_ship = {
-				#		limit = {
-				#			is_ship_size = battleship
-				#			FLEET = { is_same_value = event_target:fleet_cur }
-				#		}
-
-						# spawn drones
-				#		ship_event = { id = heavy_carrier.2 }
-				#	}
-				#}
 			}
 		}
 
 		FROMFROMFROM = {
-			save_event_target_as = fleet_cur
+			save_event_target_as = this_fleet
 			if = {
 				limit = {
 					OWNER = {
 						count_owned_ships = {
 							limit = {
 								is_ship_size = battleship
-								FLEET = { is_same_value = event_target:fleet_cur }
+								FLEET = { is_same_value = event_target:this_fleet }
 							}
 							count > 0
 						}
@@ -56,7 +43,6 @@ event = {
 	}
 }
 
-# Spawn drones
 fleet_event = {
 	id = heavy_carrier.2
 	hide_window = yes
@@ -66,19 +52,19 @@ fleet_event = {
 		if = {
 			limit = {
 				check_variable = {
-					which = "heavy_carrier_tcount"
+					which = "heavy_carrier_count"
 					value < 1
 				}
 			}
 
 			set_variable = {
-				which = "heavy_carrier_tcount"
+				which = "heavy_carrier_count"
 				value < 1
 			}
 		}
 
 		change_variable = {
-			which = "heavy_carrier_tcount"
+			which = "heavy_carrier_count"
 			value = 1
 		}
 
@@ -86,7 +72,7 @@ fleet_event = {
 			limit = {
 				is_in_combat = yes
 				check_variable = {
-					which = "heavy_carrier_tcount"
+					which = "heavy_carrier_count"
 					value = 2
 				}
 			}
@@ -175,7 +161,7 @@ fleet_event = {
 
 			else = {
 				change_variable = {
-					which = "heavy_carrier_tcount"
+					which = "heavy_carrier_count"
 					value = -1
 				}
 			}
@@ -190,7 +176,7 @@ fleet_event = {
 
 	immediate = {
 		change_variable = {
-			which = "heavy_carrier_tcount"
+			which = "heavy_carrier_count"
 			value = -1
 		}
 
@@ -208,14 +194,12 @@ fleet_event = {
 	}
 }
 
-# End of drone ship lifespan 
 ship_event = {
 	id = heavy_carrier.5
 	hide_window = yes
 	is_triggered_only = yes
 
-	immediate = {		
-		#destroy_fleet = THIS		
+	immediate = {			
 		reduce_hp_percent = 100
 	}
 }
