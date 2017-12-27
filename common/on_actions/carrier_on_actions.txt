@@ -1,5 +1,0 @@
-on_entering_battle = {
-	events = {
-		heavy_carrier.1
-	}
-}

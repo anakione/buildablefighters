@@ -1,0 +1,9 @@
+﻿l_english:
+
+fighter:0 "Heavy Fighter"
+fighter_plural:"Heavy Fighters"
+bomber:0 "Heavy Bomber"
+bomber_plural:0 "Heavy Bombers"
+FIGHTER_bow_S3:0 "Heavy Fighter"
+BOMBER_MID_S3:0 "Heavy Bomber"
+BOMBER_MID_M1S1:0 "Torpedo Bomber"

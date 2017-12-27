@@ -1,9 +1,9 @@
 ship_section_template = {
-	key = "FIGHTER_MID_S3"
+	key = "FIGHTER_bow_S3"
 	ship_size = fighter
 	fits_on_slot = mid
 	entity = "fighter_entity"
-	icon = "GFX_ship_part_core_mid"
+	icon = "GFX_ship_part_core_bow"
 	
 	# Guns
 	ai_weight = {
